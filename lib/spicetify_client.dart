@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:New_Spotify_Theme_Changer/theme_info.dart';
 import 'package:process_run/shell.dart';
 import 'package:path/path.dart' as path;
 
@@ -29,6 +30,7 @@ Future installSpicetify() async {
       "powershell Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/khanhas/spicetify-cli/master/install.ps1 | Invoke-Expression");
   await shell.run("spicetify");
   await shell.run("spicetify backup apply");
+  // TODO: Install (move to '%userprofile%/.spicetify/Themes') themes from 'assets/themes' folder
   await _moveThemesToSpicetify();
 }
 
@@ -59,4 +61,9 @@ Future _moveThemesToSpicetify() async {
   });
 }
 
-// TODO: Apply theme
+Future applyTheme(ThemeInfo themeInfo) async {
+  Shell shell = Shell();
+  await shell.run(
+      "spicetify config current_theme ${themeInfo.themeCode} color_scheme ${themeInfo.colorSchemeCode}");
+  await shell.run("spicetify apply");
+}
