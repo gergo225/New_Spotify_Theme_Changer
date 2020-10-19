@@ -30,7 +30,6 @@ Future installSpicetify() async {
       "powershell Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/khanhas/spicetify-cli/master/install.ps1 | Invoke-Expression");
   await shell.run("spicetify");
   await shell.run("spicetify backup apply");
-  // TODO: Install (move to '%userprofile%/.spicetify/Themes') themes from 'assets/themes' folder
   await _moveThemesToSpicetify();
 }
 
